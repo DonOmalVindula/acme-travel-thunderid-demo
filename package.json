@@ -1,0 +1,20 @@
+{
+  "name": "acme-travel-demo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Acme Travel: the ThunderID step-by-step demo (web app + bookings API)",
+  "packageManager": "pnpm@10.33.4",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm --recursive --parallel --stream run dev",
+    "dev:web": "pnpm --filter acme-travel-web run dev",
+    "dev:api": "pnpm --filter acme-bookings-api run dev",
+    "build": "pnpm --filter acme-travel-web run build",
+    "checkpoint": "bash scripts/checkpoint.sh",
+    "apply-web": "bash scripts/apply-web.sh",
+    "apply-solution": "bash scripts/apply-solution.sh",
+    "reset": "bash scripts/reset.sh"
+  }
+}
