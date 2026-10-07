@@ -1,5 +1,5 @@
 {
   "clientId": "",
   "baseUrl": "https://localhost:8090",
-  "scopes": ["openid", "profile"]
+  "scopes": ["openid", "profile", "booking:read", "booking:write"]
 }
