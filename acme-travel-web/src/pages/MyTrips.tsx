@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { listBookings, type Booking } from "../api";
+import TokenPanel from "../components/TokenPanel";
 
 const money = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -68,6 +69,8 @@ export default function MyTrips() {
           ))}
         </ul>
       )}
+
+      <TokenPanel />
     </>
   );
 }

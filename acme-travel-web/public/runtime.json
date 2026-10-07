@@ -1,0 +1,5 @@
+{
+  "clientId": "",
+  "baseUrl": "https://localhost:8090",
+  "scopes": ["openid", "profile"]
+}

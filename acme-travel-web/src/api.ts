@@ -23,11 +23,29 @@ export class ApiError extends Error {
   }
 }
 
+// Set once from the app, after ThunderID is initialised.
+let getAccessToken: (() => Promise<string>) | null = null;
+
+export function configureApi(options: { getAccessToken: () => Promise<string> }) {
+  getAccessToken = options.getAccessToken;
+}
+
+async function authHeaders(): Promise<Record<string, string>> {
+  if (!getAccessToken) return {};
+  try {
+    const token = await getAccessToken();
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  } catch {
+    return {};
+  }
+}
+
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const response = await fetch(`/api${path}`, {
     ...init,
     headers: {
       "Content-Type": "application/json",
+      ...(await authHeaders()),
       ...(init.headers ?? {}),
     },
   });
