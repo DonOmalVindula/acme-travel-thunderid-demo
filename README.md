@@ -12,37 +12,8 @@ the first config file, the web app never changes again.
 | `acme-travel-web/` | The React web app (Vite + TypeScript). Starts unsecured. Runs on http://localhost:3001 |
 | `acme-bookings-api/` | The bookings API (Node + Express). Starts unsecured. Runs on http://localhost:4001 |
 | `GUIDE.md` | The step-by-step integration guide |
-| `solution/` | The finished, ThunderID-secured versions of every file that changes in the guide |
-| `starter/` | A copy of the unsecured starting files |
-| `scripts/apply-web.sh` | Wires the web app to ThunderID in one go, Step 1c of the guide (`pnpm apply-web`) |
-| `scripts/apply-solution.sh` | Copies all of `solution/` over both apps (`pnpm apply-solution`) |
-| `scripts/reset.sh` | Puts both apps back to the unsecured starting point (`pnpm reset`) |
-
-## Branches and checkpoints
-
-| Ref | What you get |
-|-----|--------------|
-| `main` (tag `checkpoint-0-start`) | The unsecured starting point. Follow GUIDE.md from here |
-| `solution` branch, tag `step-1-sign-in` | Step 1 done: the web app signs in through ThunderID |
-| `solution` branch, tag `step-5-protect-api` | Everything done: web app and API secured |
-
-Jump to any of them with dependencies installed:
-
-```bash
-pnpm checkpoint start
-pnpm checkpoint step-1-sign-in
-pnpm checkpoint step-5-protect-api
-```
-
-The checkpoints do not contain a Client ID. Put yours in an untracked file once and every
-checkpoint picks it up:
-
-```bash
-echo "VITE_THUNDERID_CLIENT_ID=<your Client ID>" > acme-travel-web/.env.local
-```
-
-Steps 2, 3, 4 and 6 of the guide change nothing in the code, so they have no checkpoint of
-their own.
+| `solution/` | The finished, ThunderID-secured version of every file the guide changes. Copy from here as you go |
+| `scripts/` | The helpers behind the `pnpm` commands named below |
 
 ## Run the apps
 
@@ -83,3 +54,32 @@ Console: https://localhost:8090/console (user `admin`). The certificate is self-
 the browser warning once for https://localhost:8090 before signing in to the app.
 
 Docs: https://thunderid.dev/docs
+
+## Work through the guide
+
+1. With both apps and ThunderID running, follow [GUIDE.md](GUIDE.md) from the top.
+2. When a step says to copy a file, take it from `solution/`. Your own edits stay in place.
+3. Stuck, or short on time? `pnpm apply-web` finishes Step 1 for you, and `pnpm apply-solution`
+   finishes everything, API included.
+4. Want to start over? `pnpm reset` puts both apps back to the unsecured start.
+
+These commands copy files in place. They never switch branches.
+
+## Jump straight to a finished state
+
+The same states also exist as git checkpoints, mainly so a presenter can switch quickly:
+`checkpoint-0-start` is `main`, and `step-1-sign-in` and `step-5-protect-api` are on the
+`solution` branch. Steps 2, 3, 4 and 6 change nothing in the code, so they have no checkpoint.
+
+```bash
+pnpm checkpoint start
+pnpm checkpoint step-1-sign-in
+pnpm checkpoint step-5-protect-api
+```
+
+A checkpoint discards local edits and reinstalls dependencies. No checkpoint contains a Client
+ID. Put yours in an untracked file once and every state picks it up:
+
+```bash
+echo "VITE_THUNDERID_CLIENT_ID=<your Client ID>" > acme-travel-web/.env.local
+```
